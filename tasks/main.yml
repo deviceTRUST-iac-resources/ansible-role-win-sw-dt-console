@@ -1,0 +1,33 @@
+---
+  - name: Create install directory
+    ansible.windows.win_file:
+      path: c:\install
+      state: directory
+
+  - name: Download deviceTRUST
+    ansible.builtin.win_get_url:
+      url: https://storage.devicetrust.com/download/deviceTRUST-21.1.310.zip
+      dest: c:\install\
+
+  - name: Unzip deviceTRUST
+    community.windows.win_unzip:
+      src: c:\install\deviceTRUST-21.1.310.zip
+      dest: c:\install\deviceTRUST-21.1.310
+
+  - name: Install deviceTRUST Console
+    ansible.windows.win_package:
+      path: c:\install\deviceTRUST-21.1.310\dtconsole-x64-release-21.1.310.0.msi
+      arguments:
+        - /quiet
+        - /passive
+        - /norestart
+      state: present
+
+  - name: Install deviceTRUST Agent
+    ansible.windows.win_package:
+      path: c:\install\deviceTRUST-21.1.310\dtagent-x64-release-21.1.310.0.msi
+      arguments:
+        - /quiet
+        - /passive
+        - /norestart
+      state: present
