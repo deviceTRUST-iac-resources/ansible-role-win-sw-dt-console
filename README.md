@@ -1,0 +1,1 @@
+# ansible-r-win-srv-rdsh-devicetrust
